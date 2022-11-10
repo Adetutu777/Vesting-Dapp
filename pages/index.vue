@@ -2,8 +2,7 @@
 <div class="">
     <div class="container mt-5">
         <!-- <ValidationObserver> -->
-        <button @click="getName">get name</button>
-        {{name}}
+
         <form class="mb-5 mt-0" @submit.prevent="createScheduler">
 
             <label class="mt-3">Wallet Address:</label>
@@ -26,11 +25,24 @@
 
             <label class="mt-3">Amount:</label>
             <!-- <ValidationProvider rules="" v-slot="{ errors }"> -->
-            <b-form-input v-model="vestedSchd.__amount" />
+            <b-form-input v-model="vestedSchd._amount" />
             <!-- <span class="" style="color:red">{{ errors[0] }}</span> -->
             <!-- </ValidationProvider>  -->
 
-            <b-button @click="filterResult" class="btn-classes-active update-btn mt-5" :disabled="crud || !name && !duration && !amount" size="sm" block>
+            <!-- cliff -->
+            <label class="mt-3">Cliff:</label>
+            <!-- <ValidationProvider rules="" v-slot="{ errors }"> -->
+            <b-form-input v-model="vestedSchd._cliff" 
+            placeholder="enter in month"/>
+            <!-- <span class="" style="color:red">{{ errors[0] }}</span> -->
+            <!-- </ValidationProvider>  -->
+            <!-- revoke button -->
+             <b-form-group label="Revokable">
+      <b-form-radio v-model="vestedSchd._revocable"  value= true>Yes</b-form-radio>
+      <b-form-radio v-model="vestedSchd._revocable" value= false >No</b-form-radio>
+    </b-form-group>
+
+            <b-button type="submit" class="btn-classes-active update-btn mt-5 bg-info"  block>
                 {{
              crud ? 'Sending': 'Submit'
            }}
@@ -68,7 +80,7 @@ export default {
             _duration: "",
             _slicePeriodSeconds: "",
             _revocable: "",
-            __amount: "",
+            _amount: "",
         })
 
         onMounted(() => {
@@ -96,23 +108,40 @@ export default {
             }
         }
         // just testing the contract to see if it works
-        const getName = async () => {
-            const resp = await contract ?.value?.owner()
-            name.value = resp.data
-        }
-
+        // const getName = async () => {
+        //     const resp = await contract ?.value?.owner()
+        //     name.value = resp.data
+        // }
 
         const createScheduler = async () => {
-                
+                const startsTime =  Date.parse(startDate.value)/1000
+            const duration = Math.abs(new Date(startDate.value) - new Date(endDate.value)) / 1000;
 
+                const cliff =Number(vestedSchd._cliff)*2.628*10**6
+
+                    vestedSchd._start = startsTime;
+                    vestedSchd._duration = duration;
+                    vestedSchd._slicePeriodSeconds = Math.ceil(Number(vestedSchd._amount)/duration)
+
+              const { _beneficiary, _start,  _cliff,  _duration, _slicePeriodSeconds,_revocable,_amount } = vestedSchd
+
+          try {
+            const result = await contract?.value?.createVestingSchedule( _beneficiary, _start, cliff, _duration, _slicePeriodSeconds, true, _amount)
+            console.log('resy', result)
+            
+          } catch (error) {
+            console.log(error)
+          }
         }
+
+        
 
         return {
             amount,
             name,
             contract,
             crud,
-            getName, vestedSchd, startDate, endDate, createScheduler
+             vestedSchd, startDate, endDate, createScheduler
         }
     }
 }
