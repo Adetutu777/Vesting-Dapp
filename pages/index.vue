@@ -70,15 +70,16 @@
             <!-- cliff -->
             <label class="mt-3">Cliff:</label>
             <!-- <ValidationProvider rules="" v-slot="{ errors }"> -->
-            <b-form-input v-model="vestedSchd._cliff" 
-            placeholder="enter in month"/>
+            <b-form-datepicker  v-model="vestedSchd._cliff" placeholder="enter in month" class="mb-2"></b-form-datepicker>
+            <!-- <b-form-input v-model="vestedSchd._cliff" 
+            placeholder="enter in month"/> -->
             <!-- <span class="" style="color:red">{{ errors[0] }}</span> -->
             <!-- </ValidationProvider>  -->
             <!-- revoke button -->
-             <b-form-group label="Revokable">
+             <!-- <b-form-group label="Revokable">
       <b-form-radio v-model="vestedSchd._revocable"  value= 'true'>Yes</b-form-radio>
       <b-form-radio v-model="vestedSchd._revocable" value= 'null' >No</b-form-radio>
-    </b-form-group>
+    </b-form-group> -->
 
             <b-button type="submit" class="btn-classes-active update-btn mt-5 bg-info"  block>
                 {{
@@ -112,12 +113,12 @@ export default {
         const contract = ref('')
         const crud = ref('')
         const vestedSchd = reactive({
-            _beneficiary: "",
+            _beneficiary: "0xDe3574dc4C3d324bDF817F8158978660e557A711",
             _start: "",
             _cliff: "",
             _duration: "",
-            _slicePeriodSeconds: "",
-            _revocable: "",
+            _slicePeriodSeconds: 2,
+            _revocable: "true",
             _amount: "",
         })
 
@@ -153,17 +154,19 @@ export default {
 
         const createScheduler = async () => {
                 const startsTime =  Date.parse(startDate.value)/1000
+                const cliff =  Date.parse(vestedSchd._cliff)/1000
             const duration = Math.abs(new Date(startDate.value) - new Date(endDate.value)) / 1000;
 
-                const cliff =Number(vestedSchd._cliff)*2.628*10**6
+                // const cliff = vestedSchd._cliff
 
+                    // vestedSchd._cliff =cliff;
                     vestedSchd._start = startsTime;
                     vestedSchd._duration = duration;
-                    vestedSchd._slicePeriodSeconds = Math.ceil(Number(vestedSchd._amount)/duration)
+                    // vestedSchd._slicePeriodSeconds = Math.ceil(Number(vestedSchd._amount)/duration)
 
               const { _beneficiary, _start,  _cliff,  _duration, _slicePeriodSeconds,_revocable,_amount } = vestedSchd
 
-console.log('resy', _beneficiary, _start,  _cliff,  _duration, _slicePeriodSeconds,_revocable,_amount)
+  console.log('resy', _beneficiary, _start,  cliff,  _duration, _slicePeriodSeconds,_revocable,_amount)
 
           try {
             const result = await contract?.value?.createVestingSchedule( _beneficiary, _start, cliff, _duration, _slicePeriodSeconds, 'true', _amount, { gasLimit: "50000" })
