@@ -76,8 +76,8 @@
             <!-- </ValidationProvider>  -->
             <!-- revoke button -->
              <b-form-group label="Revokable">
-      <b-form-radio v-model="vestedSchd._revocable"  value= true>Yes</b-form-radio>
-      <b-form-radio v-model="vestedSchd._revocable" value= false >No</b-form-radio>
+      <b-form-radio v-model="vestedSchd._revocable"  value= 'true'>Yes</b-form-radio>
+      <b-form-radio v-model="vestedSchd._revocable" value= 'null' >No</b-form-radio>
     </b-form-group>
 
             <b-button type="submit" class="btn-classes-active update-btn mt-5 bg-info"  block>
@@ -163,9 +163,11 @@ export default {
 
               const { _beneficiary, _start,  _cliff,  _duration, _slicePeriodSeconds,_revocable,_amount } = vestedSchd
 
+console.log('resy', _beneficiary, _start,  _cliff,  _duration, _slicePeriodSeconds,_revocable,_amount)
+
           try {
-            const result = await contract?.value?.createVestingSchedule( _beneficiary, _start, cliff, _duration, _slicePeriodSeconds, true, _amount)
-            console.log('resy', result)
+            const result = await contract?.value?.createVestingSchedule( _beneficiary, _start, cliff, _duration, _slicePeriodSeconds, 'true', _amount, { gasLimit: "50000" })
+            
             
           } catch (error) {
             console.log(error)
