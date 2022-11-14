@@ -71,15 +71,7 @@
             <label class="mt-3">Cliff:</label>
             <!-- <ValidationProvider rules="" v-slot="{ errors }"> -->
             <b-form-datepicker  v-model="vestedSchd._cliff" placeholder="enter in month" class="mb-2"></b-form-datepicker>
-            <!-- <b-form-input v-model="vestedSchd._cliff" 
-            placeholder="enter in month"/> -->
-            <!-- <span class="" style="color:red">{{ errors[0] }}</span> -->
-            <!-- </ValidationProvider>  -->
-            <!-- revoke button -->
-             <!-- <b-form-group label="Revokable">
-      <b-form-radio v-model="vestedSchd._revocable"  value= 'true'>Yes</b-form-radio>
-      <b-form-radio v-model="vestedSchd._revocable" value= 'null' >No</b-form-radio>
-    </b-form-group> -->
+
 
             <b-button type="submit" class="btn-classes-active update-btn mt-5 bg-info"  block>
                 {{
@@ -97,13 +89,11 @@
 </template>
 
 <script>
-import {
-    ref,onMounted,reactive,} from '@nuxtjs/composition-api';
+import { ref,onMounted,reactive } from '@nuxtjs/composition-api';
 import bunzz from 'bunzz-sdk';
-import {
-    DAPP_ID,
-    API_KEY
-} from "@/constant"
+import { DAPP_ID, API_KEY } from "@/constant"
+import {useContract} from "../store"
+
 export default {
     setup() {
         const name = ref('')
@@ -112,8 +102,9 @@ export default {
         const endDate = ref('')
         const contract = ref('')
         const crud = ref('')
+         const vestingContract = ref('')
         const vestedSchd = reactive({
-            _beneficiary: "",
+            _beneficiary: "0x86Ffd93F159Fc6a8f6C9768253F1d34A348882f4",
             _start: "",
             _cliff: "",
             _duration: "",
@@ -122,49 +113,30 @@ export default {
             _amount: "",
         })
 
-        onMounted(() => {
-            initContract()
+        onMounted (async() => {
+    const resp = await useContract()
+    contract.value = resp
+          // await getVestingSchedules(contract.value)
         })
 
-        const handle = async () => {
-            const allow = await bunzz.initWithConnect({
-                dappId: DAPP_ID,
-                apiKey: API_KEY,
+       
+        
 
-            })
-            return allow
-        }
-
-        const MODULE_NAME = "Vesting"
-        const initContract = async () => {
-            try {
-                const handler = await handle();
-                const getContract = await handler.getContract(MODULE_NAME);
-                // connecting to other contract
-                // const connect = getContract.connectToOtherContracts(['0x5799F73217c54b91CAE323D4FBe79b15A38C311C'])
-                // console.log('connecty', connect)
-                contract.value = getContract;
-            } catch (error) {
-                console.error(error);
-            }
-        }
         // just testing the contract to see if it works
         // const getName = async () => {
         //     const resp = await contract ?.value?.owner()
         //     name.value = resp.data
         // }
 
+         
+
         const createScheduler = async () => {
                 const startsTime =  Date.parse(startDate.value)/1000
                 const cliff =  Date.parse(vestedSchd._cliff)/1000
             const duration = Math.abs(new Date(startDate.value) - new Date(endDate.value)) / 1000;
 
-                // const cliff = vestedSchd._cliff
-
-                    // vestedSchd._cliff =cliff;
                     vestedSchd._start = startsTime;
                     vestedSchd._duration = duration;
-                    // vestedSchd._slicePeriodSeconds = Math.ceil(Number(vestedSchd._amount)/duration)
 
               const { _beneficiary, _start,  _cliff,  _duration, _slicePeriodSeconds,_revocable,_amount } = vestedSchd
 
@@ -180,11 +152,7 @@ export default {
         
 
         return {
-            amount,
-            name,
-            contract,
-            crud,
-             vestedSchd, startDate, endDate, createScheduler
+            amount, name, contract, crud, vestedSchd, startDate, endDate, createScheduler, 
         }
     }
 }
