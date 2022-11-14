@@ -140,7 +140,8 @@ export default {
             try {
                 const handler = await handle();
                 const getContract = await handler.getContract(MODULE_NAME);
-                // console.log('ttt', contract)
+                // const connect = getContract.connectToOtherContracts(['0x43a185159ba956Ddfb350bf850eEF03F3081217a'])
+                // console.log('connecty', connect)
                 contract.value = getContract;
             } catch (error) {
                 console.error(error);
@@ -166,10 +167,8 @@ export default {
 
               const { _beneficiary, _start,  _cliff,  _duration, _slicePeriodSeconds,_revocable,_amount } = vestedSchd
 
-  console.log('resy', _beneficiary, _start,  cliff,  _duration, _slicePeriodSeconds,_revocable,_amount)
-
           try {
-            const result = await contract?.value?.createVestingSchedule( _beneficiary, _start, cliff, _duration, _slicePeriodSeconds, 'true', _amount, { gasLimit: "50000" })
+            const result = await contract?.value?.createVestingSchedule( _beneficiary, _start, cliff, _duration, _slicePeriodSeconds, 'true', _amount, { gasLimit: "1000000" })
             
             
           } catch (error) {
