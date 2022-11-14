@@ -113,7 +113,7 @@ export default {
         const contract = ref('')
         const crud = ref('')
         const vestedSchd = reactive({
-            _beneficiary: "0xDe3574dc4C3d324bDF817F8158978660e557A711",
+            _beneficiary: "",
             _start: "",
             _cliff: "",
             _duration: "",
@@ -140,7 +140,8 @@ export default {
             try {
                 const handler = await handle();
                 const getContract = await handler.getContract(MODULE_NAME);
-                // const connect = getContract.connectToOtherContracts(['0x43a185159ba956Ddfb350bf850eEF03F3081217a'])
+                // connecting to other contract
+                // const connect = getContract.connectToOtherContracts(['0x5799F73217c54b91CAE323D4FBe79b15A38C311C'])
                 // console.log('connecty', connect)
                 contract.value = getContract;
             } catch (error) {
