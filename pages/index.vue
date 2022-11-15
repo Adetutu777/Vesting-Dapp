@@ -1,5 +1,11 @@
 <template>
   <div class="body">
+
+  <div class="load" v-if="loading">
+      <div id="loader"></div>
+    </div>
+
+<div class="" v-if="!loading">
 <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
 	<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Vesting</a>
 	<ul class="navbar-nav px-3">
@@ -8,6 +14,7 @@
 		</li>
 	</ul>
 </nav>
+
 <div class="container-fluid">
 	<div class="row">
 		<nav class="col-md-2 d-none d-md-block sidebar">
@@ -103,7 +110,7 @@
 		</main>
 	</div>
 </div>
-
+</div>
   </div>
 </template>
 
@@ -119,13 +126,13 @@ import millify from "millify";
             const data = ref ([])
             const amount = ref('')
             const supply = ref(millify(3010000000000000010000000/1e18))
-            // const loading = ref(true)
+            const loading = ref(true)
 
                     onMounted ( async()=>{
                             contract.value = await useContract()
                            await  populateData()
                          await  getVestingSchedulesTotalAmount()
-                        //  loading.value = false
+                         loading.value = false
                     })
 
                     const getVestingSchedulesCount = async () => {
@@ -183,7 +190,7 @@ import millify from "millify";
         //           const contract
         //         }
 
-                    return {data, amount, supply}
+                    return {data, amount, supply, loading}
         }
     }
 </script>
@@ -465,12 +472,36 @@ figure {
   vertical-align: middle;
 }
 
-.load{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  font-size:2rem
+.load {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2rem;
+  padding: 3rem;
+  height: 100vh;
+  background-color: #1b2431;
+}
 
+#loader {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 </style>

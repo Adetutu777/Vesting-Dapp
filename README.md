@@ -25,11 +25,8 @@ Features Completed
 4. Connect frontend app to bunzz sdk
 4. Dapp owner can create a vesting schedule
 
-Features in Progres
-1. Beneficiary can see vesting schedule
-2. Beneficiary can withdraw vested token
 
-#### Screenshot of dashboard & schedule page shown below
+## Screenshot of dashboard & schedule page shown below
 ![image](./image/screencapture-localhost-3000-2022-11-15-23_28_03.png "Optional Title")
 
 ![image](./image/screencapture-localhost-3000-schedule-2022-11-15-23_34_24.png "Optional Title")..
