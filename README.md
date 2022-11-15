@@ -1,6 +1,12 @@
 # Vesting Dapp with [Bunzz SDK](https://docs.bunzz.dev/product-docs/sdk/guides)
 ## Deployed network : Goerli
 
+
+Note: You must be on Goerli testnet to run the live link
+
+Live Link : https://vesting-token.netlify.app/
+
+
 This dapp allows a user, for example a company owner to reward employees with an amount of token if the employee stays longer at the company and to penalize an employee who terminates a contract.
 
 The datails for creating a vesting schedule are collected in a form. The input fields are:
@@ -23,5 +29,7 @@ Features in Progres
 1. Beneficiary can see vesting schedule
 2. Beneficiary can withdraw vested token
 
+#### Screenshot of dashboard & schedule page shown below
+![image](./image/screencapture-localhost-3000-2022-11-15-23_28_03.png "Optional Title")
 
-You can find the app at: https://vesting-token.netlify.app/
+![image](./image/screencapture-localhost-3000-schedule-2022-11-15-23_34_24.png "Optional Title")..

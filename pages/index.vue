@@ -26,10 +26,10 @@
             </NuxtLink>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">
+					<NuxtLink class="nav-link" to="/help">
                   <i class="zmdi zmdi-shopping-cart"></i>
                   Help
-                </a>
+               </NuxtLink>
 					</li>
 				</ul>
        
@@ -129,8 +129,16 @@ import millify from "millify";
                     })
 
                     const getVestingSchedulesCount = async () => {
+            //   const count = await contract?.value?.getVestingSchedulesCount()
+            // return count.data.toString()
+            // return 2
+            try {
               const count = await contract?.value?.getVestingSchedulesCount()
-            return count.data.toString()
+               return count.data.toString()
+               return 2
+            } catch (error) {
+              console.log(error)
+            }
               
         }
 
@@ -186,7 +194,7 @@ import millify from "millify";
   background-color: #1b2431;
   color: #202020;
   font-family: "Montserrat", "Helvetica", "Open Sans", "Arial";
-  font-size: 13px;
+  font-size: 1rem;
   height: 100vh;
 }
 

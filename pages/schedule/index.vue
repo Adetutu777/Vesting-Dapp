@@ -5,12 +5,14 @@
         <!-- <ValidationObserver> -->
         <div class="body">
  <div class="container">
-  <button class="block-btn mb-3 mt-3"  style='border:none' @click.prevent="$router.back()">
-           <!-- <img class="point-btn" src="/backBtn.svg" alt="image"> -->
+  
+         <div class="">
+         <button class="block-btn "  style='border:none' @click.prevent="$router.back()">
       <span class="img-resize">&#128281;</span>    
          </button>
-   <h4 class="text-center text-light pt-5">Create Schedule</h4>
-        <form class="mb-5 mt-0" @submit.prevent="createScheduler">
+   <h4 class="text-center head-text text-light pt-5 ml-4">Create Schedule</h4>
+   </div>
+        <form clss="mb-5 mt-0" @submit.prevent="createScheduler">
 
             <label class="mt-3 text-light">Wallet Address:</label>
             <!-- <ValidationProvider rules="" v-slot="{ errors }"> -->
@@ -32,7 +34,7 @@
 
             <label class="mt-3 text-light">Amount:</label>
             <!-- <ValidationProvider rules="" v-slot="{ errors }"> -->
-            <b-form-input class="border-inp" v-model="vestedSchd._amount" />
+            <b-form-input class="border-inp" type="number" placeholder="enter amount" v-model="vestedSchd._amount" />
             <!-- <span class="" style="color:red">{{ errors[0] }}</span> -->
             <!-- </ValidationProvider>  -->
 
@@ -130,7 +132,6 @@ export default {
   background-color: #1b2431;
   color: #202020;
   font-family: "Montserrat", "Helvetica", "Open Sans", "Arial";
-  font-size: 13px;
   height: 100vh;
 }
 
@@ -158,5 +159,8 @@ export default {
 
 .img-resize{
   font-size: 2rem;
+}
+.head-text {
+  display: inline-block;
 }
 </style>
