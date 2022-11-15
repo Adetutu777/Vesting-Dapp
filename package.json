@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
+    "build": "nuxt build ",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
@@ -15,6 +15,7 @@
     "bunzz-sdk": "^1.2.3",
     "core-js": "^3.25.3",
     "ethers": "^5.7.2",
+    "millify": "^5.0.1",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
