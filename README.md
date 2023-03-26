@@ -1,6 +1,6 @@
 # Vesting Dapp with [Bunzz SDK](https://docs.bunzz.dev/product-docs/sdk/guides)
 ## Deployed network : Goerli
-
+Tech stack: NuxtJs, VueJs, Ethers, Html, Css, BootstrapVue
 
 Note: You must be on Goerli testnet to run the live link
 
